@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Advent calendar</title>
+    <style>
+      html, body
+      {
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div style="width: 600px; margin: 50px;">
+      <advent-calendar></advent-calendar>
+    </div>
+    <script type="module">
+      import AdventCalendar from '../index.mjs';
+
+      const target = document.querySelector('advent-calendar');
+      const props = {
+        bg: './bg.jpg',
+        bgAlt: 'Advent calendar background',
+        hinges: 'right',
+        async loadContent(door)
+        {
+          return door < 13 ? Promise.resolve(`Hallo ${door}`) : Promise.reject(false);
+        }
+      };
+
+      const adventCalendar = new AdventCalendar({ target, props });
+      adventCalendar.$on('door-hover', console.log.bind(console));
+      adventCalendar.$on('door-open', console.log.bind(console));
+    </script>
+  </body>
+</html>
